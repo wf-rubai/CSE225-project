@@ -1,5 +1,11 @@
+#include<cstdlib>
 #include<iostream>
+#include"TruthTable/tableGenerator.cpp"
+
+using namespace std;
 
 int main(){
-    std::cout << 3+5 << std::endl;
+    // system("clear");
+    // cin.get();
+    tableGenerator tg("a'BcA");
 }
