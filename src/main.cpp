@@ -1,15 +1,15 @@
 #include <cstdlib>
 #include <iostream>
 #include "TruthTable/tableGenerator.cpp"
+#include "kMap/mapGenerator.cpp"
 
 using namespace std;
 void logo();
 void loop();
 
 int main(){
-    // system("clear");
-    // cin.get();
-    loop();
+    // loop();
+    mapGenerator map("1,2,4,6,8,9,11,13,15");
 }
 
 void loop(){
@@ -18,9 +18,10 @@ void loop(){
         system("clear");
         logo();
         cout << "What is your logic " << endl;
-        cout << " 1. Solo truth-table" << endl;
-        cout << " 2. Mega truth-table" << endl;
-        cout << " 3. Solve my K-Map" << endl;
+        cout << " 1. Solo Truth-Table" << endl;
+        cout << " 2. Mega Truth-Table" << endl;
+        cout << " 3. Fint My Logic" << endl;
+        cout << " 4. Solve my Experession" << endl;
         cout << " 0. Quit" << endl;
         cout << endl << "Your wish? >> ";
 
@@ -32,8 +33,9 @@ void loop(){
             string str[1];
             cout << "Enter your equation: ";
             cin >> str[0];
-            cout << endl << endl << "As you wish...";
+            cout << endl << endl << "As you wish..." << endl << endl;
             tableGenerator tg(str, 1);
+            cout << endl << endl << "Press \"Enter\" to bo back" << endl;
         }else if(n==2){
             system("clear");
             logo();
@@ -45,14 +47,20 @@ void loop(){
                 cout << "Enter equation no" << i+1 << ": ";
                 cin >> str[i];
             }
-            cout << endl << endl << "As you wish...";
+            cout << endl << endl << "As you wish..." << endl << endl;
             tableGenerator tg(str, nn);
+            cout << endl << endl << "Press \"Enter\" to bo back" << endl;
         }else if(n==3){
             system("clear");
             logo();
 
+            cout << endl << endl << "Press \"Enter\" to bo back" << endl;
+        }else if(n==4){
+            system("clear");
+            logo();
+
+            cout << endl << endl << "Press \"Enter\" to bo back" << endl;
         }
-        cout << endl << endl << "Press \"Enter\" to bo back" << endl;
         cin.get( );
         cin.get( );
     }while(n != 0);

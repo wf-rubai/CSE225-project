@@ -60,7 +60,7 @@ void logicCalculator::makeNoSpace()
             equ[size++] = equ[i];
         }
     }
-    equ[size] = '\0';
+    // equ[size] = '\0';
     equ = equ.substr(0, size);
     lenght = size;
 }
