@@ -26,7 +26,7 @@ void loop(){
         cout << " 1. Solo Truth-Table" << endl;
         cout << " 2. Mega Truth-Table" << endl;
         cout << " 3. Fint My Logic" << endl;
-        cout << " 4. Solve my Experession" << endl;
+        cout << " 4. Simplify My Experession" << endl;
         cout << " 0. Quit" << endl;
         cout << endl << "Your wish? >> ";
 
@@ -80,7 +80,6 @@ void loop(){
             cin >> str[0];
             cout << endl << endl << "As you wish..." << endl << endl;
             tableGenerator tg(str, 1);
-            cout << tg.getstr() << "...";
             mapGenerator map(tg.getstr(), "");
             cout << endl << endl << "Press \"Enter\" to bo back" << endl;
         }

@@ -3,6 +3,7 @@
  *
  *  Created on: 2021-03-17 18:45
  *      Author: Jack Chen <redchenjs@live.com>
+ *      https://github.com/redchenjs/qmc
  */
 
 #include <cstdio>

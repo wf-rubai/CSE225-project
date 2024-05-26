@@ -31,7 +31,6 @@ QMC_Algorithm::QMC_Algorithm(int n, int m, int d, int arr[])
     for (int i = 0; i < m + d; i++)
     {
         input[i] = arr[i];
-        // cout << arr[i] << ", ";
 
         if (input[i] >= (0x01 << n))
         {

@@ -130,7 +130,7 @@ void mapGenerator::mapMaker()
             if(row[j] == arr[i]/s2){
                 for(int k=0; k<s2; k++){
                     if(col[k] == arr[i]%s2){
-                        if(i < arrlen-dc)
+                        if(i <= arrlen-dc)
                             ar[j][k] = 1;
                         else
                             ar[j][k] = -1;
