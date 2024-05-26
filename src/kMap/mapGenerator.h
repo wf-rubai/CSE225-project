@@ -12,18 +12,21 @@ using namespace std;
 class mapGenerator
 {
     public:
-        mapGenerator(string);
-        void strConverter(string);
-        int* makeBin(int[], int, int&);
-        void add(int[]);
-        void solve();
+        mapGenerator(string, string);
+        void strConverter(string, string);
+        int* makeBin(int);
+        int makeGray(int[]);
+        void mapMaker();
         void print();
 
     private:
         int arrlen;
+        int dc;
         int size;
+        int tempsize;
         int * arr;
-        unordered_map<int, vector<int*> > map;
+        int * row;
+        int * col;
 
 };
 

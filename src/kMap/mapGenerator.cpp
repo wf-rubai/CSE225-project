@@ -1,31 +1,51 @@
 #include "mapGenerator.h"
+#include "Imports/QMC_Algorithm.cpp"
 #include <iostream>
 #include <string>
 
-mapGenerator::mapGenerator(string str)
+mapGenerator::mapGenerator(string str, string str1)
 {
-    strConverter(str);
+    strConverter(str, str1);
 }
 
-void mapGenerator::strConverter(string str)
+void mapGenerator::strConverter(string str, string str1)
 {
     int count = 0;
-    for(int i=0; i<str.length(); i++){      /// removing all spaces
+    dc = 0;
+    for(int i=0; i<str.length(); i++){      /// removing all spaces for str
         if(str[i] != ' '){
             str[count++] = str[i];
         }
     }
     str = str.substr(0, count);
-    arr = new int[count];
+    for(int i=0; i<str1.length(); i++){      /// removing all spaces for str1
+        if(str1[i] != ' '){
+            str1[dc++] = str1[i];
+        }
+    }
+    str1 = str1.substr(0, dc);
+    arr = new int[count+dc];
     arr[0] = 0;
     count = 0;
-    for(int i=0; i<str.length(); i++){      /// making num arr to sring
+    for(int i=0; i<str.length(); i++){      /// making num arr to str
         if(str[i] == ','){
             arr[++count] = 0;
         }else{
             arr[count] = (arr[count] * 10) + (int)(str[i] - 48);
         }
     }
+    if(str1.length() != 0)
+        count++;
+    dc = 0;
+    for(int i=0; i<str1.length(); i++){      /// making num arr to str1
+        if(str1[i] == ','){
+            dc++;
+            arr[++count] = 0;
+        }else{
+            arr[count] = (arr[count] * 10) + (int)(str1[i] - 48);
+        }
+    }
+    dc++;
     arrlen = count+1;
     count = 0;
     for(int i=0; i<arrlen; i++){            /// finding highest number
@@ -38,127 +58,127 @@ void mapGenerator::strConverter(string str)
         size++;     
     }
 
-    for(int i=0; i<arrlen; i++){ 
-        int* a;
-        a = makeBin(a, arr[i], count);
-        add(a);
+    // cout << size << endl;
+    // cout << arrlen << endl;
+    // cout << dc << endl;
+    for(int i=0; i<arrlen; i++){
+        cout << arr[i];
     }
-
-    print();
-    solve();
+    mapMaker();
+    new QMC_Algorithm(size, arrlen-dc, dc, arr);
 }
 
-int* mapGenerator::makeBin(int a[], int n, int& count)
+int* mapGenerator::makeBin(int n)
 {
-    count = 0;
-    a = new int[size];
-    for(int i=size-1; i>=0; i--){
+    tempsize = 0;
+    int nn = n;
+    while(nn != 0){
+        nn/=2;
+        tempsize++;
+    }
+    int * a = new int[tempsize];
+    for(int i=tempsize-1; i>=0; i--){
         a[i] = n%2;
-        if(n%2 == 1){
-            count++;
-        }
         n /= 2;
     }
     return a;
 }
 
-void mapGenerator::add(int a[])
+int mapGenerator::makeGray(int a[])
 {
-    bool canadd = false;
-    int count = 0;
-    for (int i=0; i<size; i++){
-        if(a[i] == 1)
-            count++;
-    }
-    
-    if(map.find(count) == map.end()){
-        vector<int*> v;
-        v.push_back(a);
-        map[count] = v;
-    }else{
-        vector<int*> v = map[count];
-        for(int i=0; i<v.size(); i++){      /// cheaking for duplicates
-            int* aa = v[i];
-            canadd = false;
-            for(int j=0; j<size; j++){
-                if(a[j] != aa[j]){
-                    canadd = true;
-                    break;
-                }
-            }
-        }
-        if(canadd){
-            v.push_back(a);
-            map.erase(count);
-            map[count] = v;
+    int ar[tempsize];
+    ar[0] = a[0];
+    for(int i=1; i<tempsize; i++){
+        if(a[i-1] == a[i]){
+            ar[i] = 0;
+        }else{
+            ar[i] = 1;
         }
     }
+    int sum = 0;
+    for(int i=tempsize-1, j=0; i>=0; i--, j++){
+        sum += (ar[i]*pow(2,j));
+    }
+    return sum;
 }
 
-void mapGenerator::solve()
+void mapGenerator::mapMaker()
 {
-    for(int ii=1; ii<=size; ii++){
-        if(map.find(ii) != map.end()){
-            if(map.find(ii-1) != map.end()){
-                vector<int*> v1 = map[ii-1];
-                vector<int*> v2 = map[ii];
-                vector<int*> v3;
-                for(int i=0; i<v2.size(); i++){
-                    int* a = v2[i];
-                    for(int j=0; j<v1.size(); j++){
-                        int* aa = v1[j];
-                        bool canmarge = true;
-                        int count = 0;
-                        for(int k=0; k<size; k++){
-                            if(a[k] != aa[k] && a[k] != -1 && aa[k] != -1){
-                                count++;
-                            }
-                            if(count > 1){
-                                canmarge = false;
-                                break;
-                            }
-                        }
-                        if(canmarge){
-                            for(int k=0; k<size; k++){
-                                if(a[k] != aa[k] && a[k] != -1 && aa[k] != -1)
-                                    aa[k] = -1;
-                            }
-                            v3.push_back(aa);
-                        }
+    int s1 = pow(2, size/2);
+    int s2 = pow(2, size - (size/2));
+    row = new int[s1];
+    col = new int[s2];
+    int ar[s1][s2];
+    // for(int i=0; i<arrlen; i++){
+    //     cout << arr[i];
+    // }
+    // cout << "..." << endl;
+    // cout << size << endl;
+    // cout << s1 << endl;
+    // cout << s2 << endl;
+    for(int i=0; i<s1; i++){
+        for(int j=0; j<s2; j++){
+            ar[i][j] = 0;
+            col[j] = makeGray(makeBin(j));
+        }
+
+        row[i] = makeGray(makeBin(i));
+    }
+
+    for(int i=0; i<arrlen; i++){
+        for(int j=0; j<s1; j++){
+            if(row[j] == arr[i]/s2){
+                for(int k=0; k<s2; k++){
+                    if(col[k] == arr[i]%s2){
+                        if(i < arrlen-dc)
+                            ar[j][k] = 1;
+                        else
+                            ar[j][k] = -1;
                     }
-                    for (int i = 0; i < v3.size(); i++)
-                    {
-                        int* f = v3[i];
-                        int f0 = f[0];
-                        int f1 = f[1];
-                        int f2 = f[2];
-                        int f3 = f[3];
-                        add(v3[i]);
-                    }
-                    v3.clear();
                 }
             }
         }
-        cout << "--------------------\n" << endl;
-        print();
     }
+    cout << endl;
+    cout << endl << "    Your K-Map...";
+    cout << endl;
+    cout << endl;
+    cout << "\t      ";
+    for(int i=0; i<s2; i++){
+        cout << col[i] << "   ";
+    }
+    cout << endl;
+    cout << "\t    +-";
+    for(int i=0; i<s2; i++){
+        if(i != s2-1)
+            cout << "--+-";
+        else
+            cout << "--+";
+    }
+    cout << endl;
+
+    for(int i=0; i<s1; i++){
+        printf("\t%3d | ", row[i]);
+        for(int j=0; j<s2; j++){
+            if(ar[i][j] != -1)
+                cout << ar[i][j] << " | ";
+            else
+                cout << "x | ";
+        }
+        cout << endl;
+        cout << "\t    +-";
+        for(int j=0; j<s2; j++){
+            if(j != s2-1)
+                cout << "--+-";
+            else
+                cout << "--+";
+        }
+        cout << endl;
+    }
+    cout << endl;
+    cout << endl;
 }
 
 void mapGenerator::print()
 {
-    for(int ii=0; ii<=size; ii++){
-        if(map.find(ii) == map.end()){
-            continue;
-        }else{
-            vector<int*> v = map[ii];
-            for(int i=0; i<v.size(); i++){
-                int* aa = v[i];
-                for(int j=0; j<size; j++){
-                    cout << aa[j];
-                }
-                cout << endl;
-            }
-            cout << endl;
-        }
-    }
 }

@@ -64,8 +64,12 @@ void tableGenerator::loop(int a, int i)
             cout << binarr[i] << " | ";
 
         cout << " ";
-        for(int i=0; i<strcount; i++)
+        for(int i=0; i<strcount; i++){
             cout << calc[i].output(binarr) << "  |  ";
+            if(calc[i].output(binarr) == 1){
+                min = min + to_string(counter-1) + ", ";
+            }    
+        }
         cout << endl;
 
         cout << " +-----+-";
@@ -80,6 +84,17 @@ void tableGenerator::loop(int a, int i)
         loop( 1, i+1);
     }
 
+}
+
+string tableGenerator::getstr()
+{
+    int n = min.length();
+    --n;
+    while(!(min[n] <= '9' && min[n] >= '0')){
+        min = min.substr(0,n);
+        --n;
+    }
+    return min;
 }
 
 void tableGenerator::checkSize()

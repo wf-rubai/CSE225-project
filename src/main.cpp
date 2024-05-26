@@ -8,8 +8,13 @@ void logo();
 void loop();
 
 int main(){
-    // loop();
-    mapGenerator map("1,2,4,6,8,9,11,13,15");
+            // mapGenerator map("4,6,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31", "");
+            // string str[] = {"a'b'c'd'e+a'b'c'de"};
+            // tableGenerator tg(str, 1);
+            // cout << tg.getstr() << "...";
+            // string s = tg.getstr();
+            // mapGenerator map(tg.getstr(), "");
+    loop();
 }
 
 void loop(){
@@ -53,12 +58,30 @@ void loop(){
         }else if(n==3){
             system("clear");
             logo();
-
+            string s1 = "", s2 = "";
+            char c[] = "";
+            cout << "Enter min terms: ";
+            cin.clear();
+            fflush(stdin);
+            getline(cin, s1);
+            cout << "Enter don't care cases (\"no\" to skip): ";
+            cin.clear();
+            fflush(stdin);
+            getline(cin, s2);
+            if(s2 == "no" || s2 == "No" || s2 == "NO")
+                s2 = "";
+            mapGenerator map(s1, s2);
             cout << endl << endl << "Press \"Enter\" to bo back" << endl;
         }else if(n==4){
             system("clear");
             logo();
-
+            string str[1];
+            cout << "Enter your equation: ";
+            cin >> str[0];
+            cout << endl << endl << "As you wish..." << endl << endl;
+            tableGenerator tg(str, 1);
+            cout << tg.getstr() << "...";
+            mapGenerator map(tg.getstr(), "");
             cout << endl << endl << "Press \"Enter\" to bo back" << endl;
         }
         cin.get( );

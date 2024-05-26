@@ -14,10 +14,12 @@ class tableGenerator
         tableGenerator(string *, int);
         void generator();
         void loop(int, int);
+        string getstr();
         void checkSize();
 
     private:
         string * logicArr;
+        string min;
         char *tabHeader;
         int *binarr;
         int size;
